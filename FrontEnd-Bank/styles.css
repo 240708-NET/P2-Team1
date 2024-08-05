@@ -1,0 +1,251 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: red;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for the form */
+.container {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.container h1 {
+    margin-top: 0;
+    font-size: 24px;
+    text-align: center;
+    color: #fff;
+}
+
+/* Form style */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input field */
+label {
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* Submit button */
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049; 
+}
+
+/* Create account link */
+p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #fa0101;
+}
+
+.account-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    color: #000000;
+}
+
+.account-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.welcome-message p{
+    color:#000000
+}
+
+.account-item {
+    flex: 1;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.account-item:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.account-header {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.account-details {
+    font-size: 20px;
+    color: black;
+}
+
+.amount {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* General body styles */
+body.checking-account {
+    font-family: Arial, sans-serif;
+    background-color: red;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for the form */
+.container {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Heading */
+.container h1 {
+    margin-top: 0;
+    font-size: 24px;
+    text-align: center;
+    color: #fff;
+}
+
+/* Form styles */
+.container form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input fields */
+.container label {
+    margin-bottom: 5px;
+}
+
+.container input[type="number"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* Submit button */
+.container button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Green background */
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+
+/* Transaction */
+.container #transactions {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.container #transactions h2 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.container #transactions ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.container #transactions li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 5px;
+}

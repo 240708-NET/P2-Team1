@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checking Account</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="checking-account">
+    <div class="container">
+        <h1>Checking Account</h1>
+        
+        <div>
+            <p>Balance: $<span id="balance">1000</span></p>
+        </div>
+
+        <div>
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+        </div>
+
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+
+        <div id="transactions">
+            <h2>Transaction History</h2>
+            <!-- Transactions will be listed here -->
+        </div>
+    </div>
+
+    
+
+    <script src="app.js" defer></script>
+</body>
+</html>
