@@ -3,58 +3,220 @@ namespace BankBackend.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using BankBackend.Service;
 using BankBackend.Models;
+using System.Net;
 
 [ApiController]
 [Route("[controller]")]
 public class UsersController : ControllerBase
 {
 
-    private readonly IBankService _gameService;
+    private readonly IBankService _bankService;
 
     private readonly ILogger<UsersController> _logger;
 
-    public UsersController(ILogger<UsersController> logger, IBankService gameService)
+    public UsersController(ILogger<UsersController> logger, IBankService bankService)
     {
-        _gameService = gameService;
+        _bankService = bankService;
         _logger = logger;
     }
 
     [HttpPost("")]
-    public User PostUser(User user){
-        throw new NotImplementedException();
+    public User PostUser([FromBody] User user)
+    {
+        return _bankService.CreateUser(user);
+    }
+
+    [HttpGet("")]
+    public List<User> GetAllUsers()
+    {
+        return _bankService.GetAllUsers();
     }
 
     [HttpPost("login")]
-    public bool Login(User user)
+    public User? Login([FromBody] User user)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return _bankService.ValidateLogin(user.Username, user.Password);
+        }
+        catch (UsernameNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return null;
+        }
+        catch (InvalidPasswordException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return null;
+        }
     }
 
     [HttpGet("{id}/accounts")]
-    public List<Account> GetAccountsByUserId(int id){
-        throw new NotImplementedException();
+    public List<Account>? GetAccountsByUserId([FromRoute] int id)
+    {
+        try
+        {
+            return _bankService.GetAccountsByUserId(id);
+        }
+        catch (UserIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
     }
 
     [HttpPatch("{userId}")]
-    public User UpdateUserInfo(User user){
-        throw new NotImplementedException();
-    }
-
-    [HttpPatch("{userId}/userName")]
-    public Account AddUserToAccountById(int accountId, int newId){
-        throw new NotImplementedException();
-    }
-
-    [HttpPatch("{accountId}/remove")]
-    public Account RemoveUserFromAccountById(int accountId, int newId){
-        throw new NotImplementedException();
-    }
-
-    [HttpPost("logout")]
-    public bool Logout(User user)
+    public User? UpdateUserInfo([FromRoute] int userId, [FromBody] User user)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return _bankService.UpdateUserProfile(userId, user.Username, user.Password);
+        }
+        catch (UserIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (RepositoryException)
+        {
+            Response.StatusCode = 500;
+            return null;
+        }
     }
+
+    [HttpPatch("{userId}/add")]
+    public Account? AddAccountToUserById([FromRoute] int userId, [FromBody] int accountId)
+    {
+        try
+        {
+            _bankService.AddAccountUser(userId, accountId);
+            return _bankService.GetAccountByAccountId(accountId);
+        }
+        catch (UserIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (AccountIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (UserNotAuthorizedException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return null;
+        }
+    }
+
+    [HttpPatch("{userId}/remove")]
+    public Account? RemoveUserFromAccountById([FromRoute] int userId, [FromBody] int accountId)
+    {
+        try
+        {
+            _bankService.RemoveAccountUser(userId, accountId);
+            return _bankService.GetAccountByAccountId(accountId);
+        }
+        catch (UserIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (AccountIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (UserNotAuthorizedException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return null;
+        }
+    }
+
+    [HttpPatch("{userId}/deposite")]
+    public Transaction? Deposite([FromRoute]int userId,[FromBody] int accoubtId,[FromBody] double amount)
+    {
+        try
+        {
+            return _bankService.Deposit(userId, accoubtId, amount);
+        }
+        catch (AccountIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (UserNotAuthorizedException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return null;
+        }
+        catch (RepositoryException)
+        {
+            Response.StatusCode = 500;
+            return null;
+        }
+    }
+
+    [HttpPatch("{userId}/withdraw")]
+    public Transaction? Withdraw([FromRoute]int userId,[FromBody] int accoubtId,[FromBody] double amount)
+    {
+        try
+        {
+            return _bankService.Withdraw(userId, accoubtId, amount);
+        }
+        catch (AccountIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (UserNotAuthorizedException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return null;
+        }
+        catch (InsufficientFundsException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            return null;
+        }
+        catch (RepositoryException)
+        {
+            Response.StatusCode = 500;
+            return null;
+        }
+    }
+
+
+    [HttpPatch("{userId}/transfer")]
+    public Transaction? Transfer([FromRoute] int userId,[FromBody] int fromAccountId,[FromBody] int toAccountId, double amount)
+    {
+        try
+        {
+            return _bankService.Transfer(userId, fromAccountId, toAccountId, amount);
+        }
+        catch (AccountIdNotFoundException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return null;
+        }
+        catch (UserNotAuthorizedException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return null;
+        }
+        catch (InsufficientFundsException)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            return null;
+        }
+    }
+
+    // [HttpPost("logout")]
+    // public void Logout()
+    // {
+    //     throw new NotImplementedException();
+    // }
 
 
 }
